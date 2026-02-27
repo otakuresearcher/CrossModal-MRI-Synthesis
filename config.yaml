@@ -1,0 +1,114 @@
+# Enhanced CS-VQ-VAE Configuration
+# ================================
+
+# Experiment
+experiment:
+  name: "enhanced_csvqvae_v1"
+  output_dir: "./experiments"
+  seed: 42
+
+# Data
+data:
+  base_path: "/home/obed/varun/Processed"  # Postcontrast to precontrast
+  source_folder: "postcontrast"  # Input modality
+  target_folder: "precontrast"   # Output modality (for CMCR)
+  image_size: 256
+  batch_size: 8
+  num_workers: 4
+  val_split: 0.1
+
+# Model Architecture
+model:
+  in_channels: 1
+  hidden_channels: 128
+  latent_channels: 64
+  num_embeddings: 512
+  commitment_cost: 0.25
+  
+  # EWSCS Parameters
+  ewscs:
+    error_weight: 0.7
+    error_temperature: 0.5
+    soft_reinit_alpha: 0.3
+    num_semantic_clusters: 16
+    cluster_update_freq: 10
+    dynamic_threshold_factor: 0.1
+  
+  # FDHQ Parameters
+  fdhq:
+    enabled: true
+    low_freq_weight: 1.0
+    high_freq_weight: 1.0
+  
+  # CMCR Parameters
+  cmcr:
+    enabled: true
+    weight: 0.1
+    feature_weight: 1.0
+    distribution_weight: 0.5
+    structure_weight: 0.5
+
+# Training
+training:
+  num_epochs: 200
+  learning_rate: 0.0001
+  betas: [0.5, 0.999]
+  weight_decay: 0.0
+  
+  # LR Scheduler
+  scheduler:
+    type: "cosine"  # "cosine", "step", "plateau"
+    min_lr: 0.00001
+    warmup_epochs: 5
+  
+  # Early Stopping
+  early_stopping:
+    enabled: true
+    patience: 30
+    min_delta: 0.0001
+  
+  # Discriminator (Adversarial Training)
+  discriminator:
+    enabled: true
+    start_epoch: 0       # Start adversarial training immediately for testing
+    learning_rate: 0.00005 # Usually lower than generator LR
+    weight: 0.8           # Weight of adversarial loss (lambda)
+    gan_loss_type: "hinge" # "hinge" or "vanilla"
+  
+  # Gradient Clipping
+  grad_clip: 1.0
+  
+  # Logging
+  log_interval: 10
+  save_interval: 10
+  sample_interval: 20
+
+# Loss Weights
+loss:
+  pixel_weight: 1.0
+  pixel_loss_type: "l1"  # "l1" or "mse"
+  perceptual_weight: 0.1
+  frequency_weight: 0.1
+  gradient_weight: 0.1
+  orthogonal_weight: 10.0
+
+# Ablation Study Presets
+# ----------------------
+# To run ablation studies, create copies of this config with these overrides:
+
+# ablation_ewscs_only:
+#   model.fdhq.enabled: false
+#   model.cmcr.enabled: false
+
+# ablation_fdhq_only:
+#   model.ewscs.error_weight: 0.0  # Disable error weighting
+#   model.cmcr.enabled: false
+
+# ablation_cmcr_only:
+#   model.ewscs.error_weight: 0.0
+#   model.fdhq.enabled: false
+
+# ablation_baseline:
+#   model.ewscs.error_weight: 0.0
+#   model.fdhq.enabled: false
+#   model.cmcr.enabled: false
