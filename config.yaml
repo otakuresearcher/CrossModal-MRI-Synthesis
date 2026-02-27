@@ -9,7 +9,7 @@ experiment:
 
 # Data
 data:
-  base_path: "/home/obed/varun/Processed"  # Postcontrast to precontrast
+  base_path: "/home/Processed"  # Postcontrast to precontrast
   source_folder: "postcontrast"  # Input modality
   target_folder: "precontrast"   # Output modality (for CMCR)
   image_size: 256
