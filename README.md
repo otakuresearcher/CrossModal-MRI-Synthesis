@@ -1,7 +1,5 @@
 # Bridging the Contrast Gap: Frequency-Aware Discrete Representation Learning for Cross-Modal MRI Synthesis
 
-[![Paper](https://img.shields.io/badge/Paper-MICCAI--2025-blue)](https://arxiv.org/abs/2501.00000)
-[![Dataset](https://img.shields.io/badge/Dataset-BrainMetShare-green)](https://github.com/otakuresearcher/BrainMetShare)
 
 Official implementation of the paper **"Bridging the Contrast Gap: Frequency-Aware Discrete Representation Learning for Cross-Modal MRI Synthesis"**.
 
@@ -15,13 +13,6 @@ This repository contains the source code for the **Enhanced CS-VQ-VAE** framewor
 2.  **Cross-Modal Consistency Regularization (CMCR)**: Enforces anatomical alignment between source and target modalities through latent feature and distribution regularization.
 3.  **Frequency-Decomposed Hierarchical Quantization (FDHQ)**: Separates structural (low-frequency) and textural (high-frequency) information into distinct discrete spaces.
 
-## Key Performance
-
-| Method | LPIPS ↓ | FID ↓ | PSNR (dB) ↑ | SSIM ↑ |
-| :--- | :---: | :---: | :---: | :---: |
-| BBDM (Diffusion) | 0.094 | 26.54 | **26.80** | **0.915** |
-| FSQ | 0.113 | 16.70 | 23.08 | 0.878 |
-| **Ours (Full)** | **0.092** | **8.94** | 25.89 | 0.901 |
 
 *Our method achieves a **46% improvement in FID** over the best competing discrete baseline while using **130× fewer FLOPs** than diffusion models.*
 
@@ -54,7 +45,6 @@ enhanced-cs-vqvae/
 ```bash
 git clone https://github.com/otakuresearcher/CrossModal-MRI-Synthesis.git
 cd CrossModal-MRI-Synthesis
-pip install -r requirements.txt
 ```
 
 *Required packages: `torch`, `torchvision`, `einops`, `lpips`, `scikit-learn`, `PyYAML`, `matplotlib`, `tqdm`.*
@@ -99,13 +89,4 @@ python evaluate.py --config config.yaml --checkpoint path/to/best_model.pth --de
 
 ---
 
-## Citation
-If you find this work useful, please cite:
-```bibtex
-@inproceedings{anonymized2025bridging,
-  title={Bridging the Contrast Gap: Frequency-Aware Discrete Representation Learning for Cross-Modal MRI Synthesis},
-  author={Anonymized Authors},
-  booktitle={MICCAI},
-  year={2025}
-}
-```
+
