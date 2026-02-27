@@ -5,7 +5,7 @@
 
 Official implementation of the paper **"Bridging the Contrast Gap: Frequency-Aware Discrete Representation Learning for Cross-Modal MRI Synthesis"**.
 
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](architecture01.png)
 
 ## Overview
 
